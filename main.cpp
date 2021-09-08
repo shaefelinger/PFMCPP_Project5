@@ -43,16 +43,14 @@ Purpose:  This project continues developing Project3.
 
 struct ElectricGuitar
 {
+    ElectricGuitar();
+    ~ElectricGuitar();
+
     int numberOfStrings = 6;
     int numberOfPickups = 2;
     std::string color = "blue";
     std::string name;
-    float price;
-
-    ElectricGuitar() : name("Telecaster"), price(1899.99f) 
-    { 
-        std::cout << "CONSTRUCTING ElectricGuitar" << std::endl;
-    }
+    float price;    
 
     struct GuitarString
     {
@@ -70,11 +68,20 @@ struct ElectricGuitar
     void plugIn(std::string cableColor);
     void selectPickup(int pickup);
     void changeVolume(float volume);
-
     void turnUpVolume();
 
     GuitarString string1; 
 };
+
+ElectricGuitar::ElectricGuitar() : name("Telecaster"), price(1899.99f) 
+    { 
+        std::cout << "CONSTRUCTING ElectricGuitar" << std::endl;
+    }
+
+ElectricGuitar::~ElectricGuitar()
+    {
+        std::cout << "DESTRUCTING ElectricGuitar" << std::endl;
+    }
 
 void ElectricGuitar::plugIn(std::string cableColor)
 {
@@ -89,6 +96,14 @@ void ElectricGuitar::selectPickup(int pickup)
 void ElectricGuitar::changeVolume(float volume)
 {
     std::cout << "Changed volume of " << ElectricGuitar::name <<" to " << volume << std::endl;
+}
+
+void ElectricGuitar::turnUpVolume()
+{
+    for (int i = 0; i <= 20; ++i )
+    {
+        changeVolume( i * 0.5f );
+    }
 }
 
 void ElectricGuitar::GuitarString::breakString()
@@ -114,18 +129,98 @@ void ElectricGuitar::GuitarString::pluckString(int fret)
     std::cout << "Plucked String " << ElectricGuitar::GuitarString::number << " / fret " << fret << std::endl;
 }
 
-void ElectricGuitar::turnUpVolume()
-{
-    for (int i = 0; i <= 20; ++i )
-    {
-        changeVolume( i * 0.5f );
-    }
-}
-
-
+// ============================================================
 /*
  copied UDT 2:
  */
+struct Computer
+{
+    Computer();
+    ~Computer();
+    int amountOfRam;
+    float processorSpeed {2.4f};
+    int sizeOfDisk = 4;
+    std::string manufacturer = "Apple";
+    std::string operatingSystem = "MacOS";
+
+    struct Application
+    {
+        std::string name = "Logic Pro";
+        std::string manufacturer = "Apple";
+        std::string appType = "audio";
+        float size = 1.1f;
+        std::string version = "10.5";
+
+        void start();
+        void close();
+        void install(std::string filePath);
+    };
+
+    void runProgram(std::string program, int priority);
+    void shutDown();
+    void eraseDisk(std::string volumeName);
+    void showInfo();
+    void powerOffCountdown();
+
+    Application logicPro;
+};
+
+Computer::Computer() : amountOfRam(8)
+{
+    std::cout << "CONSTRUCTING Computer" << std::endl;
+}
+
+Computer::~Computer()
+{
+    std::cout << "DESTRUCTING Computer" << std::endl;
+}
+
+void Computer::runProgram(std::string program, int priority)
+{
+    std::cout << "Running " << program << " with priority " << priority << std::endl;
+}
+
+void Computer::shutDown()
+{
+    std::cout << "Computer shut down!" << std::endl;
+}
+
+void Computer::eraseDisk(std::string volumeName)
+{
+    std::cout << "Erased Disk " << volumeName << std::endl;
+}
+
+void Computer::showInfo()
+{
+    std::cout << "The Computer has " << amountOfRam << "GB of RAM and a processor speed of " << processorSpeed << " GHz" << std::endl;
+}
+
+void Computer::powerOffCountdown() 
+{
+    int i = 10;
+    while (i > 0)
+    {
+        std::cout << "Power off in " << i << std::endl;
+        --i;
+    }
+    shutDown();
+} 
+
+void Computer::Application::start()
+{
+    std::cout << Computer::Application::name << " started" << std::endl;
+}
+
+void Computer::Application::close()
+{
+    std::cout << Computer::Application::name << " closed" << std::endl;
+}
+
+void Computer::Application::install(std::string filePath)
+{
+    std::cout << Computer::Application::name << " installed on " << filePath << std::endl;
+}
+// ============================================================
 
 /*
  copied UDT 3:
@@ -169,5 +264,19 @@ int main()
     std::cout << "String-Manufacturer: " << telecaster.string1.manufacturer << std::endl;
     telecaster.turnUpVolume();
     std::cout << "============================================================" << std::endl;
+
+    Computer macbook;
+    macbook.runProgram("Ableton", 10);
+    macbook.shutDown();
+    macbook.eraseDisk("Macintosh HD");
+    macbook.logicPro.start();
+    macbook.logicPro.close();
+    macbook.logicPro.install("Macintosh HD");
+    macbook.showInfo();
+    std::cout << macbook.logicPro.name << " by " << macbook.logicPro.manufacturer << " has a size of " << macbook.logicPro.size << " GB" << std::endl;
+    macbook.powerOffCountdown();
+    std::cout << "============================================================" << std::endl;
+
+
     std::cout << "good to go!" << std::endl;
 }
