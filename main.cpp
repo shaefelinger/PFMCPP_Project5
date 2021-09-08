@@ -52,6 +52,11 @@ struct ElectricGuitar
     std::string name;
     float price;    
 
+    void plugIn(std::string cableColor);
+    void selectPickup(int pickup);
+    void changeVolume(float volume);
+    void turnUpVolume();
+
     struct GuitarString
     {
         std::string manufacturer = "Ernie Ball";
@@ -64,11 +69,6 @@ struct ElectricGuitar
         void tuneString (float referencePitch);
         void pluckString(int fret); 
     };
-
-    void plugIn(std::string cableColor);
-    void selectPickup(int pickup);
-    void changeVolume(float volume);
-    void turnUpVolume();
 
     GuitarString string1; 
 };
@@ -137,11 +137,18 @@ struct Computer
 {
     Computer();
     ~Computer();
+
     int amountOfRam;
     float processorSpeed {2.4f};
     int sizeOfDisk = 4;
     std::string manufacturer = "Apple";
     std::string operatingSystem = "MacOS";
+
+    void runProgram(std::string program, int priority);
+    void shutDown();
+    void eraseDisk(std::string volumeName);
+    void showInfo();
+    void powerOffCountdown();
 
     struct Application
     {
@@ -155,13 +162,6 @@ struct Computer
         void close();
         void install(std::string filePath);
     };
-
-    void runProgram(std::string program, int priority);
-    void shutDown();
-    void eraseDisk(std::string volumeName);
-    void showInfo();
-    void powerOffCountdown();
-
     Application logicPro;
 };
 
@@ -225,6 +225,76 @@ void Computer::Application::install(std::string filePath)
 /*
  copied UDT 3:
  */
+struct Bus
+{
+    Bus();
+    ~Bus();
+    
+    int maximumSpeed { 110 };
+    int numberOfSeats;
+    std::string manufacturer = "MAN";
+    float fuelConsumption = 20.3f;
+    float fuelCapacity { 200.0f };
+
+    void startEngine();
+    void turnLeft(int angle);
+    void openDoors(bool openAllDoors);
+    void drive (int distance);
+};
+
+Bus::Bus() : 
+numberOfSeats(24) 
+{
+    std::cout << "CONSTRUCTING Bus" << std::endl;
+}
+
+Bus::~Bus() 
+{
+    std::cout << "DESTRUCTING Bus" << std::endl;
+}
+
+void Bus::startEngine()
+{
+    std::cout << "Engine of Bus started. The maximum speed is " << maximumSpeed << " km/h" <<std::endl;
+}
+
+void Bus::turnLeft(int angle)
+{
+    std::cout << "Turned left " << angle << " degrees" << std::endl;
+}
+
+void Bus::openDoors(bool openAllDoors)
+{
+    if(openAllDoors)
+    {
+        std::cout << "Opened all doors" << std::endl;
+    }
+    else 
+    {
+        std::cout << "Opened a single door" << std::endl;
+    }
+}
+
+void Bus::drive (int distance) 
+{
+    float fuelLeft, fuelUsed;
+    int i = 0; 
+    while ( i <= distance )
+    {
+        fuelUsed =  i * fuelConsumption / 100;
+        fuelLeft =  fuelCapacity - fuelUsed;
+
+        if ( fuelLeft < 0 ) 
+        {
+            std::cout << "YOU RAN OUT OF FUEL!!!" << std::endl;
+            break;
+        }
+
+        std::cout << "You have driven " << i << " Km and used " << fuelUsed << " liters of fuel. You have " << fuelLeft << " liters left." << std::endl;
+        i += 50;        
+    }
+}
+// ============================================================
 
 /*
  new UDT 4:
@@ -277,6 +347,14 @@ int main()
     macbook.powerOffCountdown();
     std::cout << "============================================================" << std::endl;
 
+    Bus schoolBus;
+    schoolBus.startEngine();
+    schoolBus.turnLeft(30);
+    schoolBus.openDoors(false);
+    schoolBus.openDoors(true);
+    std::cout << "This Bus made by " << schoolBus.manufacturer << " has " << schoolBus.numberOfSeats << " Seats and a maxiumum speed of " << schoolBus.maximumSpeed << " km/h" << std::endl;
+    schoolBus.drive(1500);
+    std::cout << "============================================================" << std::endl;
 
     std::cout << "good to go!" << std::endl;
 }
