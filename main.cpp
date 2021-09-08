@@ -43,14 +43,14 @@ Purpose:  This project continues developing Project3.
 
 struct ElectricGuitar
 {
-    ElectricGuitar();
+    ElectricGuitar(std::string guitarManufacturer, std::string guitarName, float guitarPrice);
     ~ElectricGuitar();
 
-    int numberOfStrings = 6;
-    int numberOfPickups = 2;
-    std::string color = "blue";
+    std::string manufacturer; 
     std::string name;
     float price;    
+    std::string color = "blue";
+    int numberOfStrings = 6;
 
     void plugIn(std::string cableColor);
     void selectPickup(int pickup);
@@ -73,14 +73,17 @@ struct ElectricGuitar
     GuitarString string1; 
 };
 
-ElectricGuitar::ElectricGuitar() : name("Telecaster"), price(1899.99f) 
+ElectricGuitar::ElectricGuitar(std::string guitarManufacturer, std::string guitarName, float guitarPrice) : 
+manufacturer(guitarManufacturer),
+name(guitarName), 
+price(guitarPrice) 
     { 
-        std::cout << "CONSTRUCTING ElectricGuitar" << std::endl;
+        std::cout << "CONSTRUCTING ElectricGuitar " << manufacturer << " " << name << " $" << price << std::endl;
     }
 
 ElectricGuitar::~ElectricGuitar()
     {
-        std::cout << "DESTRUCTING ElectricGuitar" << std::endl;
+        std::cout << "DESTRUCTING ElectricGuitar " << manufacturer << " " << name << std::endl;
     }
 
 void ElectricGuitar::plugIn(std::string cableColor)
@@ -300,11 +303,55 @@ void Bus::drive (int distance)
  new UDT 4:
  with 2 member functions
  */
+struct musicStore
+{
+    musicStore();
+    ~musicStore();
+
+    ElectricGuitar lesPaul {"Gibson", "Les Paul", 3289.99f};
+    ElectricGuitar stratocaster{"Fender", "Stratocaster", 2399.99f};
+    Computer officePc;
+
+    float valueOfGuitars();
+};
+
+musicStore::musicStore()
+{
+    std::cout << "CONSTRUCTING Music Store" << std::endl;
+}
+
+musicStore::~musicStore()
+{
+    std::cout << "DESTRUCTING Music Store" << std::endl;
+}
+
+float musicStore::valueOfGuitars(
+    return 999.f;
+);
 
 /*
  new UDT 5:
  with 2 member functions
  */
+
+struct rentalService
+{
+    rentalService();
+    ~rentalService();
+    Bus luxuryNightliner;
+    Bus tourBus;
+    ElectricGuitar cheapGuitar {"NoName", "Cheap Chinese Copy", 99.f};
+};
+
+rentalService::rentalService()
+{
+    std::cout << "CONSTRUCTING Rental Service" << std::endl;
+}
+
+rentalService::~rentalService()
+{
+    std::cout << "DESTRUCTING Rental Service" << std::endl;
+}
 
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
@@ -323,7 +370,7 @@ void Bus::drive (int distance)
 #include <iostream>
 int main()
 {
-    ElectricGuitar telecaster;
+    ElectricGuitar telecaster{"Fender", "Telecaster", 1899.99f};
     telecaster.plugIn("green");
     telecaster.selectPickup(1);
     telecaster.changeVolume(9.9f);
@@ -354,6 +401,14 @@ int main()
     schoolBus.openDoors(true);
     std::cout << "This Bus made by " << schoolBus.manufacturer << " has " << schoolBus.numberOfSeats << " Seats and a maxiumum speed of " << schoolBus.maximumSpeed << " km/h" << std::endl;
     schoolBus.drive(1500);
+    std::cout << "============================================================" << std::endl;
+
+    rentalService tourRentals;
+    std::cout << "============================================================" << std::endl;
+    
+    musicStore guitarCenter;
+    // guitarCenter.stratocaster.turnUpVolume();
+    std::cout << guitarCenter.valueOfGuitars() << std::endl;
     std::cout << "============================================================" << std::endl;
 
     std::cout << "good to go!" << std::endl;
