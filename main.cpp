@@ -77,15 +77,15 @@ ElectricGuitar::ElectricGuitar(std::string guitarManufacturer, std::string guita
 manufacturer(guitarManufacturer),
 name(guitarName), 
 price(guitarPrice) 
-    { 
-        std::cout << "CONSTRUCTING ElectricGuitar " << manufacturer << " " << name << " $" << price << std::endl;
-    }
+{ 
+    std::cout << "CONSTRUCTING ElectricGuitar " << manufacturer << " " << name << " $" << price << std::endl;
+}
 
 ElectricGuitar::~ElectricGuitar()
-    {
-        std::cout << "DESTRUCTING ElectricGuitar " << manufacturer << " " << name << std::endl;
-        string1.breakString();
-    }
+{
+    std::cout << "DESTRUCTING ElectricGuitar " << manufacturer << " " << name << std::endl;
+    string1.breakString();
+}
 
 void ElectricGuitar::plugIn(std::string cableColor)
 {
@@ -310,35 +310,35 @@ void Bus::drive (int distance)
  new UDT 4:
  with 2 member functions
  */
-struct musicStore
+struct MusicStore
 {
-    musicStore();
-    ~musicStore();
+    MusicStore();
+    ~MusicStore();
 
     ElectricGuitar lesPaul { "Gibson", "Les Paul", 3289.99f };
     ElectricGuitar stratocaster { "Fender", "Stratocaster", 2399.99f };
     Computer officePc { "Asus", "Windows 95" };
 
     float valueOfGuitars();
-    float blackFridayPrice(int discount, float originalPrice);
+    float calculateBlackFridayPrice(int discount, float originalPrice);
 };
 
-musicStore::musicStore()
+MusicStore::MusicStore()
 {
     std::cout << "CONSTRUCTING Music Store" << std::endl;
 }
 
-musicStore::~musicStore()
+MusicStore::~MusicStore()
 {
     std::cout << "DESTRUCTING Music Store" << std::endl;
 }
 
-float musicStore::valueOfGuitars() 
+float MusicStore::valueOfGuitars() 
 {
     return lesPaul.price + stratocaster.price;
 }
 
-float musicStore::blackFridayPrice(int discount, float originalPrice)
+float MusicStore::calculateBlackFridayPrice(int discount, float originalPrice)
 {
     std::cout << "Huge Black Friday Discount!! Get " << discount << " percent of!! Old Price: $" << originalPrice << " New Price: $";
     return originalPrice * ( 100 - discount ) * 0.01f ;
@@ -349,10 +349,10 @@ float musicStore::blackFridayPrice(int discount, float originalPrice)
  with 2 member functions
  */
 
-struct rentalService
+struct RentalService
 {
-    rentalService();
-    ~rentalService();
+    RentalService();
+    ~RentalService();
 
     Bus luxuryNightliner;
     Bus tourBus;
@@ -363,24 +363,24 @@ struct rentalService
     void prepareComputer();
 };
 
-rentalService::rentalService()
+RentalService::RentalService()
 {
     std::cout << "CONSTRUCTING Rental Service" << std::endl;
     goOnTour(50);
 }
 
-rentalService::~rentalService()
+RentalService::~RentalService()
 {
     std::cout << "DESTRUCTING Rental Service" << std::endl;
 }
 
-void rentalService::goOnTour(int tourDistance)
+void RentalService::goOnTour(int tourDistance)
 {
     std::cout << "Tour Start:" << std::endl;
     tourBus.drive(tourDistance);
 }
 
-void rentalService::prepareComputer()
+void RentalService::prepareComputer()
 {
     std::cout << "Preparing " << rentalLaptop.manufacturer << " Computer for rental:" << std::endl; 
     rentalLaptop.showInfo();
@@ -438,15 +438,15 @@ int main()
     schoolBus.drive(1500);
     std::cout << "============================================================" << std::endl;
 
-    rentalService tourRentals;
+    RentalService tourRentals;
     tourRentals.prepareComputer(); 
     tourRentals.goOnTour(250);
     std::cout << "============================================================" << std::endl;
     
-    musicStore guitarCenter;
+    MusicStore guitarCenter;
     std::cout << "The value of the Guitars is $" << guitarCenter.valueOfGuitars() << std::endl;
-    std::cout << guitarCenter.blackFridayPrice(20, 1000.0f) << std::endl;
-    std::cout << guitarCenter.blackFridayPrice(10, guitarCenter.lesPaul.price) << std::endl;
+    std::cout << guitarCenter.calculateBlackFridayPrice(20, 1000.0f) << std::endl;
+    std::cout << guitarCenter.calculateBlackFridayPrice(10, guitarCenter.lesPaul.price) << std::endl;
     std::cout << "============================================================" << std::endl;
 
     std::cout << "good to go!" << std::endl;
