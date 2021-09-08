@@ -39,24 +39,354 @@ Purpose:  This project continues developing Project3.
 /*
  copied UDT 1:
  */
+#include <iostream>
 
+struct ElectricGuitar
+{
+    ElectricGuitar(std::string guitarManufacturer, std::string guitarName, float guitarPrice);
+    ~ElectricGuitar();
+
+    std::string manufacturer; 
+    std::string name;
+    float price;    
+    std::string color = "blue";
+    int numberOfStrings = 6;
+
+    void plugIn(std::string cableColor);
+    void selectPickup(int pickup);
+    void changeVolume(float volume);
+    void turnUpVolume();
+
+    struct GuitarString
+    {
+        std::string manufacturer = "Ernie Ball";
+        int number = 1;
+        bool isWound = true;
+        float width = 0.52f;
+        std::string material = "steel";
+
+        void breakString();
+        void tuneString (float referencePitch);
+        void pluckString(int fret); 
+    };
+
+    GuitarString string1; 
+};
+
+ElectricGuitar::ElectricGuitar(std::string guitarManufacturer, std::string guitarName, float guitarPrice) : 
+manufacturer(guitarManufacturer),
+name(guitarName), 
+price(guitarPrice) 
+{ 
+    std::cout << "CONSTRUCTING ElectricGuitar " << manufacturer << " " << name << " $" << price << std::endl;
+}
+
+ElectricGuitar::~ElectricGuitar()
+{
+    std::cout << "DESTRUCTING ElectricGuitar " << manufacturer << " " << name << std::endl;
+    string1.breakString();
+}
+
+void ElectricGuitar::plugIn(std::string cableColor)
+{
+    std::cout << "You have plugged the " << cableColor << " cable into the " << ElectricGuitar::color <<  " " << ElectricGuitar::name <<std::endl;
+}
+
+void ElectricGuitar::selectPickup(int pickup)
+{
+    std::cout << "Switched to pickup " << pickup << std::endl;
+}
+
+void ElectricGuitar::changeVolume(float volume)
+{
+    std::cout << "Changed volume of " << ElectricGuitar::name <<" to " << volume << std::endl;
+}
+
+void ElectricGuitar::turnUpVolume()
+{
+    for (int i = 0; i <= 20; ++i )
+    {
+        changeVolume( i * 0.5f );
+    }
+}
+
+void ElectricGuitar::GuitarString::breakString()
+{
+    std::cout << "String " << ElectricGuitar::GuitarString::number << " just broke!! ";
+    if (ElectricGuitar::GuitarString::isWound)
+    {
+        std::cout << "This is a wound string - how did that happen??" << std::endl;;
+    }
+    else  
+    {
+        std::cout << std::endl;
+    }
+}
+
+void ElectricGuitar::GuitarString::tuneString(float referencePitch)
+{
+    std::cout << "String " << ElectricGuitar::GuitarString::number << " is tuned to " << referencePitch << " Hz" <<std::endl;
+}
+
+void ElectricGuitar::GuitarString::pluckString(int fret)
+{
+    std::cout << "Plucked String " << ElectricGuitar::GuitarString::number << " / fret " << fret << std::endl;
+}
+
+// ============================================================
 /*
  copied UDT 2:
  */
+struct Computer
+{
+    Computer(std::string computerManufacturer, std::string computerOS);
+    ~Computer();
+
+    std::string manufacturer = "Apple";
+    std::string operatingSystem = "MacOS";
+    int amountOfRam;
+    float processorSpeed {2.4f};
+    int sizeOfDisk = 4;
+
+    void runProgram(std::string program, int priority);
+    void shutDown();
+    void eraseDisk(std::string volumeName);
+    void showInfo();
+    void powerOffCountdown();
+
+    struct Application
+    {
+        std::string name = "Logic Pro";
+        std::string manufacturer = "Apple";
+        std::string appType = "audio";
+        float size = 1.1f;
+        std::string version = "10.5";
+
+        void start();
+        void close();
+        void install(std::string filePath);
+    };
+    Application logicPro;
+};
+
+Computer::Computer(std::string computerManufacturer, std::string computerOS) : 
+manufacturer(computerManufacturer),
+operatingSystem(computerOS),
+amountOfRam(8)
+{
+    std::cout << "CONSTRUCTING Computer: " << manufacturer << " - running " << operatingSystem << std::endl;
+    logicPro.start();
+}
+
+Computer::~Computer()
+{
+    std::cout << "DESTRUCTING Computer" << std::endl;
+    logicPro.close();
+    shutDown();
+}
+
+void Computer::runProgram(std::string program, int priority)
+{
+    std::cout << "Running " << program << " with priority " << priority << std::endl;
+}
+
+void Computer::shutDown()
+{
+    std::cout << "Computer " << manufacturer << " shut down!" << std::endl;
+}
+
+void Computer::eraseDisk(std::string volumeName)
+{
+    std::cout << "Erased Disk " << volumeName << std::endl;
+}
+
+void Computer::showInfo()
+{
+    std::cout << "The Computer has " << amountOfRam << "GB of RAM and a processor speed of " << processorSpeed << " GHz" << std::endl;
+}
+
+void Computer::powerOffCountdown() 
+{
+    int i = 10;
+    while (i > 0)
+    {
+        std::cout << "Power off in " << i << std::endl;
+        --i;
+    }
+    shutDown();
+} 
+
+void Computer::Application::start()
+{
+    std::cout << Computer::Application::name << " started" << std::endl;
+}
+
+void Computer::Application::close()
+{
+    std::cout << Computer::Application::name << " closed" << std::endl;
+}
+
+void Computer::Application::install(std::string filePath)
+{
+    std::cout << Computer::Application::name << " installed on " << filePath << std::endl;
+}
+// ============================================================
 
 /*
  copied UDT 3:
  */
+struct Bus
+{
+    Bus();
+    ~Bus();
+    
+    int maximumSpeed { 110 };
+    int numberOfSeats;
+    std::string manufacturer = "MAN";
+    float fuelConsumption = 20.3f;
+    float fuelCapacity { 200.0f };
+
+    void startEngine();
+    void turnLeft(int angle);
+    void openDoors(bool openAllDoors);
+    void drive (int distance);
+};
+
+Bus::Bus() : 
+numberOfSeats(24) 
+{
+    std::cout << "CONSTRUCTING Bus" << std::endl;
+}
+
+Bus::~Bus() 
+{
+    std::cout << "DESTRUCTING Bus" << std::endl;
+}
+
+void Bus::startEngine()
+{
+    std::cout << "Engine of Bus started. The maximum speed is " << maximumSpeed << " km/h" <<std::endl;
+}
+
+void Bus::turnLeft(int angle)
+{
+    std::cout << "Turned left " << angle << " degrees" << std::endl;
+}
+
+void Bus::openDoors(bool openAllDoors)
+{
+    if(openAllDoors)
+    {
+        std::cout << "Opened all doors" << std::endl;
+    }
+    else 
+    {
+        std::cout << "Opened a single door" << std::endl;
+    }
+}
+
+void Bus::drive (int distance) 
+{
+    float fuelLeft, fuelUsed;
+    int i = 0; 
+    while ( i <= distance )
+    {
+        fuelUsed =  i * fuelConsumption / 100;
+        fuelLeft =  fuelCapacity - fuelUsed;
+
+        if ( fuelLeft < 0 ) 
+        {
+            std::cout << "YOU RAN OUT OF FUEL!!!" << std::endl;
+            break;
+        }
+
+        std::cout << "You have driven " << i << " Km and used " << fuelUsed << " liters of fuel. You have " << fuelLeft << " liters left." << std::endl;
+        i += 50;        
+    }
+}
+// ============================================================
 
 /*
  new UDT 4:
  with 2 member functions
  */
+struct MusicStore
+{
+    MusicStore();
+    ~MusicStore();
+
+    ElectricGuitar lesPaul { "Gibson", "Les Paul", 3289.99f };
+    ElectricGuitar stratocaster { "Fender", "Stratocaster", 2399.99f };
+    Computer officePc { "Asus", "Windows 95" };
+
+    float valueOfGuitars();
+    float calculateBlackFridayPrice(int discount, float originalPrice);
+};
+
+MusicStore::MusicStore()
+{
+    std::cout << "CONSTRUCTING Music Store" << std::endl;
+}
+
+MusicStore::~MusicStore()
+{
+    std::cout << "DESTRUCTING Music Store" << std::endl;
+}
+
+float MusicStore::valueOfGuitars() 
+{
+    return lesPaul.price + stratocaster.price;
+}
+
+float MusicStore::calculateBlackFridayPrice(int discount, float originalPrice)
+{
+    std::cout << "Huge Black Friday Discount!! Get " << discount << " percent of!! Old Price: $" << originalPrice << " New Price: $";
+    return originalPrice * ( 100 - discount ) * 0.01f ;
+}
 
 /*
  new UDT 5:
  with 2 member functions
  */
+
+struct RentalService
+{
+    RentalService();
+    ~RentalService();
+
+    Bus luxuryNightliner;
+    Bus tourBus;
+    ElectricGuitar cheapGuitar { "NoName", "Cheap Chinese Copy", 99.f };
+    Computer rentalLaptop { "HP", "Windows 10" };
+
+    void goOnTour(int tourDistance);    
+    void prepareComputer();
+};
+
+RentalService::RentalService()
+{
+    std::cout << "CONSTRUCTING Rental Service" << std::endl;
+    goOnTour(50);
+}
+
+RentalService::~RentalService()
+{
+    std::cout << "DESTRUCTING Rental Service" << std::endl;
+}
+
+void RentalService::goOnTour(int tourDistance)
+{
+    std::cout << "Tour Start:" << std::endl;
+    tourBus.drive(tourDistance);
+}
+
+void RentalService::prepareComputer()
+{
+    std::cout << "Preparing " << rentalLaptop.manufacturer << " Computer for rental:" << std::endl; 
+    rentalLaptop.showInfo();
+    rentalLaptop.eraseDisk("C:");
+    rentalLaptop.runProgram("Pro Tools", 2);
+}
 
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
@@ -75,5 +405,49 @@ Purpose:  This project continues developing Project3.
 #include <iostream>
 int main()
 {
+    ElectricGuitar telecaster { "Fender", "Telecaster", 1899.99f };
+    telecaster.plugIn("green");
+    telecaster.selectPickup(1);
+    telecaster.changeVolume(9.9f);
+    telecaster.string1.breakString();
+    telecaster.string1.tuneString(442.2f);
+    telecaster.string1.pluckString(12);
+    std::cout << "Price: " << telecaster.price << std::endl;
+    std::cout << "String-Manufacturer: " << telecaster.string1.manufacturer << std::endl;
+    telecaster.turnUpVolume();
+    std::cout << "============================================================" << std::endl;
+
+    Computer macbook { "Apple", "MacOs" };
+    macbook.runProgram("Ableton", 10);
+    macbook.shutDown();
+    macbook.eraseDisk("Macintosh HD");
+    macbook.logicPro.start();
+    macbook.logicPro.close();
+    macbook.logicPro.install("Macintosh HD");
+    macbook.showInfo();
+    std::cout << macbook.logicPro.name << " by " << macbook.logicPro.manufacturer << " has a size of " << macbook.logicPro.size << " GB" << std::endl;
+    macbook.powerOffCountdown();
+    std::cout << "============================================================" << std::endl;
+
+    Bus schoolBus;
+    schoolBus.startEngine();
+    schoolBus.turnLeft(30);
+    schoolBus.openDoors(false);
+    schoolBus.openDoors(true);
+    std::cout << "This Bus made by " << schoolBus.manufacturer << " has " << schoolBus.numberOfSeats << " Seats and a maxiumum speed of " << schoolBus.maximumSpeed << " km/h" << std::endl;
+    schoolBus.drive(1500);
+    std::cout << "============================================================" << std::endl;
+
+    RentalService tourRentals;
+    tourRentals.prepareComputer(); 
+    tourRentals.goOnTour(250);
+    std::cout << "============================================================" << std::endl;
+    
+    MusicStore guitarCenter;
+    std::cout << "The value of the Guitars is $" << guitarCenter.valueOfGuitars() << std::endl;
+    std::cout << guitarCenter.calculateBlackFridayPrice(20, 1000.0f) << std::endl;
+    std::cout << guitarCenter.calculateBlackFridayPrice(10, guitarCenter.lesPaul.price) << std::endl;
+    std::cout << "============================================================" << std::endl;
+
     std::cout << "good to go!" << std::endl;
 }
