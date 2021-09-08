@@ -39,6 +39,89 @@ Purpose:  This project continues developing Project3.
 /*
  copied UDT 1:
  */
+#include <iostream>
+
+struct ElectricGuitar
+{
+    int numberOfStrings = 6;
+    int numberOfPickups = 2;
+    std::string color = "blue";
+    std::string name;
+    float price;
+
+    ElectricGuitar() : name("Telecaster"), price(1899.99f) 
+    { 
+        std::cout << "CONSTRUCTING ElectricGuitar" << std::endl;
+    }
+
+    struct GuitarString
+    {
+        std::string manufacturer = "Ernie Ball";
+        int number = 1;
+        bool isWound = true;
+        float width = 0.52f;
+        std::string material = "steel";
+
+        void breakString();
+        void tuneString (float referencePitch);
+        void pluckString(int fret); 
+    };
+
+    void plugIn(std::string cableColor);
+    void selectPickup(int pickup);
+    void changeVolume(float volume);
+
+    void turnUpVolume();
+
+    GuitarString string1; 
+};
+
+void ElectricGuitar::plugIn(std::string cableColor)
+{
+    std::cout << "You have plugged the " << cableColor << " cable into the " << ElectricGuitar::color <<  " " << ElectricGuitar::name <<std::endl;
+}
+
+void ElectricGuitar::selectPickup(int pickup)
+{
+    std::cout << "Switched to pickup " << pickup << std::endl;
+}
+
+void ElectricGuitar::changeVolume(float volume)
+{
+    std::cout << "Changed volume of " << ElectricGuitar::name <<" to " << volume << std::endl;
+}
+
+void ElectricGuitar::GuitarString::breakString()
+{
+    std::cout << "String " << ElectricGuitar::GuitarString::number << " just broke!! ";
+    if (ElectricGuitar::GuitarString::isWound)
+    {
+        std::cout << "This is a wound string - how did that happen??" << std::endl;;
+    }
+    else  
+    {
+        std::cout << std::endl;
+    }
+}
+
+void ElectricGuitar::GuitarString::tuneString(float referencePitch)
+{
+    std::cout << "String " << ElectricGuitar::GuitarString::number << " is tuned to " << referencePitch << " Hz" <<std::endl;
+}
+
+void ElectricGuitar::GuitarString::pluckString(int fret)
+{
+    std::cout << "Plucked String " << ElectricGuitar::GuitarString::number << " / fret " << fret << std::endl;
+}
+
+void ElectricGuitar::turnUpVolume()
+{
+    for (int i = 0; i <= 20; ++i )
+    {
+        changeVolume( i * 0.5f );
+    }
+}
+
 
 /*
  copied UDT 2:
@@ -75,5 +158,16 @@ Purpose:  This project continues developing Project3.
 #include <iostream>
 int main()
 {
+    ElectricGuitar telecaster;
+    telecaster.plugIn("green");
+    telecaster.selectPickup(1);
+    telecaster.changeVolume(9.9f);
+    telecaster.string1.breakString();
+    telecaster.string1.tuneString(442.2f);
+    telecaster.string1.pluckString(12);
+    std::cout << "Price: " << telecaster.price << std::endl;
+    std::cout << "String-Manufacturer: " << telecaster.string1.manufacturer << std::endl;
+    telecaster.turnUpVolume();
+    std::cout << "============================================================" << std::endl;
     std::cout << "good to go!" << std::endl;
 }
