@@ -84,6 +84,7 @@ price(guitarPrice)
 ElectricGuitar::~ElectricGuitar()
     {
         std::cout << "DESTRUCTING ElectricGuitar " << manufacturer << " " << name << std::endl;
+        string1.breakString();
     }
 
 void ElectricGuitar::plugIn(std::string cableColor)
@@ -355,7 +356,7 @@ struct rentalService
 
     Bus luxuryNightliner;
     Bus tourBus;
-    ElectricGuitar cheapGuitar {"NoName", "Cheap Chinese Copy", 99.f};
+    ElectricGuitar cheapGuitar { "NoName", "Cheap Chinese Copy", 99.f };
     Computer rentalLaptop { "HP", "Windows 10" };
 
     void goOnTour(int tourDistance);    
@@ -365,6 +366,7 @@ struct rentalService
 rentalService::rentalService()
 {
     std::cout << "CONSTRUCTING Rental Service" << std::endl;
+    goOnTour(50);
 }
 
 rentalService::~rentalService()
