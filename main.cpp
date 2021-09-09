@@ -134,7 +134,7 @@ void ElectricGuitar::selectPickup(int pickup)
 
 void ElectricGuitar::changeVolume(float volume)
 {
-    std::cout << "Changed volume of " << name <<" to " << volume << std::endl;
+    std::cout << "Changed volume of " << name << " to " << volume << std::endl;
 }
 
 void ElectricGuitar::turnUpVolume()
