@@ -89,6 +89,9 @@ struct ElectricGuitar
     void changeVolume(float volume);
     void turnUpVolume();
 
+    void printThisPrice();
+    void printThisStringManufacturer();
+
     struct GuitarString
     {
         std::string manufacturer = "Ernie Ball";
@@ -142,6 +145,16 @@ void ElectricGuitar::turnUpVolume()
     }
 }
 
+void ElectricGuitar::printThisPrice()
+{
+    std::cout << "This Price: " << this->price << std::endl;
+}
+
+void ElectricGuitar::printThisStringManufacturer()
+{
+    std::cout << "This String-Manufacturer: " << this->string1.manufacturer << std::endl;
+} 
+    
 void ElectricGuitar::GuitarString::breakString()
 {
     std::cout << "String " << ElectricGuitar::GuitarString::number << " just broke!! ";
@@ -197,6 +210,8 @@ struct Computer
         void start();
         void close();
         void install(std::string filePath);
+
+        void printThisApplicationSize();
     };
     Application logicPro;
 };
@@ -262,6 +277,11 @@ void Computer::Application::install(std::string filePath)
 {
     std::cout << Computer::Application::name << " installed on " << filePath << std::endl;
 }
+
+void Computer::Application::printThisApplicationSize()
+{
+    std::cout << "This " << this->name << " by " << this->manufacturer << " has a size of " << this->size << " GB" << std::endl;
+}
 // ============================================================
 
 /*
@@ -282,6 +302,8 @@ struct Bus
     void turnLeft(int angle);
     void openDoors(bool openAllDoors);
     void drive (int distance);
+
+    void printThisBusInfo();
 };
 
 Bus::Bus() : 
@@ -336,6 +358,11 @@ void Bus::drive (int distance)
         i += 50;        
     }
 }
+
+void Bus::printThisBusInfo()
+{
+    std::cout << "This Bus made by " << this->manufacturer << " has " << this->numberOfSeats << " Seats and a maxiumum speed of " << this->maximumSpeed << " km/h" << std::endl;
+}
 // ============================================================
 
 /*
@@ -353,6 +380,11 @@ struct MusicStore
 
     float valueOfGuitars();
     float calculateBlackFridayPrice(int discount, float originalPrice);
+
+    void printThisGuitarValue();
+    void printThisBlackFidayPrice(int discount, float originalPrice);
+
+    void printThisLesPaulBlackFridayPrice(int discount);
 };
 
 MusicStore::MusicStore()
@@ -374,6 +406,21 @@ float MusicStore::calculateBlackFridayPrice(int discount, float originalPrice)
 {
     std::cout << "Huge Black Friday Discount!! Get " << discount << " percent of!! Old Price: $" << originalPrice << " New Price: $";
     return originalPrice * ( 100 - discount ) * 0.01f ;
+}
+
+void MusicStore::printThisGuitarValue()
+{
+    std::cout << "This value of the Guitars is $" << this->valueOfGuitars() << std::endl;
+}
+
+void MusicStore::printThisBlackFidayPrice(int discount, float originalPrice)
+{
+    std::cout << "This " << this->calculateBlackFridayPrice(discount, originalPrice) << std::endl;
+}
+
+void MusicStore::printThisLesPaulBlackFridayPrice(int discount)
+{
+    std::cout << "This Les Paul " << this->calculateBlackFridayPrice(discount, this->lesPaul.price) << std::endl;
 }
 
 /*
@@ -445,7 +492,9 @@ int main()
     telecaster.string1.tuneString(442.2f);
     telecaster.string1.pluckString(12);
     std::cout << "Price: " << telecaster.price << std::endl;
+    telecaster.printThisPrice();
     std::cout << "String-Manufacturer: " << telecaster.string1.manufacturer << std::endl;
+    telecaster.printThisStringManufacturer();
     telecaster.turnUpVolume();
     std::cout << "============================================================" << std::endl;
 
@@ -458,6 +507,7 @@ int main()
     macbook.logicPro.install("Macintosh HD");
     macbook.showInfo();
     std::cout << macbook.logicPro.name << " by " << macbook.logicPro.manufacturer << " has a size of " << macbook.logicPro.size << " GB" << std::endl;
+    macbook.logicPro.printThisApplicationSize();
     macbook.powerOffCountdown();
     std::cout << "============================================================" << std::endl;
 
@@ -466,7 +516,8 @@ int main()
     schoolBus.turnLeft(30);
     schoolBus.openDoors(false);
     schoolBus.openDoors(true);
-    std::cout << "This Bus made by " << schoolBus.manufacturer << " has " << schoolBus.numberOfSeats << " Seats and a maxiumum speed of " << schoolBus.maximumSpeed << " km/h" << std::endl;
+    std::cout << "The Bus made by " << schoolBus.manufacturer << " has " << schoolBus.numberOfSeats << " Seats and a maxiumum speed of " << schoolBus.maximumSpeed << " km/h" << std::endl;
+    schoolBus.printThisBusInfo();
     schoolBus.drive(1500);
     std::cout << "============================================================" << std::endl;
 
@@ -477,8 +528,11 @@ int main()
     
     MusicStore guitarCenter;
     std::cout << "The value of the Guitars is $" << guitarCenter.valueOfGuitars() << std::endl;
+    guitarCenter.printThisGuitarValue();
     std::cout << guitarCenter.calculateBlackFridayPrice(20, 1000.0f) << std::endl;
+    guitarCenter.printThisBlackFidayPrice(20, 1000.0f);
     std::cout << guitarCenter.calculateBlackFridayPrice(10, guitarCenter.lesPaul.price) << std::endl;
+    guitarCenter.printThisLesPaulBlackFridayPrice(10);
     std::cout << "============================================================" << std::endl;
 
     std::cout << "good to go!" << std::endl;
