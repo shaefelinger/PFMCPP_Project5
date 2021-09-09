@@ -124,7 +124,7 @@ ElectricGuitar::~ElectricGuitar()
 
 void ElectricGuitar::plugIn(std::string cableColor)
 {
-    std::cout << "You have plugged the " << cableColor << " cable into the " << ElectricGuitar::color <<  " " << ElectricGuitar::name <<std::endl;
+    std::cout << "You have plugged the " << cableColor << " cable into the " << color <<  " " << name <<std::endl;
 }
 
 void ElectricGuitar::selectPickup(int pickup)
@@ -134,7 +134,7 @@ void ElectricGuitar::selectPickup(int pickup)
 
 void ElectricGuitar::changeVolume(float volume)
 {
-    std::cout << "Changed volume of " << ElectricGuitar::name <<" to " << volume << std::endl;
+    std::cout << "Changed volume of " << name <<" to " << volume << std::endl;
 }
 
 void ElectricGuitar::turnUpVolume()
@@ -157,8 +157,8 @@ void ElectricGuitar::printThisStringManufacturer()
     
 void ElectricGuitar::GuitarString::breakString()
 {
-    std::cout << "String " << ElectricGuitar::GuitarString::number << " just broke!! ";
-    if (ElectricGuitar::GuitarString::isWound)
+    std::cout << "String " << number << " just broke!! ";
+    if (isWound)
     {
         std::cout << "This is a wound string - how did that happen??" << std::endl;;
     }
@@ -170,12 +170,12 @@ void ElectricGuitar::GuitarString::breakString()
 
 void ElectricGuitar::GuitarString::tuneString(float referencePitch)
 {
-    std::cout << "String " << ElectricGuitar::GuitarString::number << " is tuned to " << referencePitch << " Hz" <<std::endl;
+    std::cout << "String " << number << " is tuned to " << referencePitch << " Hz" <<std::endl;
 }
 
 void ElectricGuitar::GuitarString::pluckString(int fret)
 {
-    std::cout << "Plucked String " << ElectricGuitar::GuitarString::number << " / fret " << fret << std::endl;
+    std::cout << "Plucked String " << number << " / fret " << fret << std::endl;
 }
 
 // ============================================================
@@ -265,17 +265,17 @@ void Computer::powerOffCountdown()
 
 void Computer::Application::start()
 {
-    std::cout << Computer::Application::name << " started" << std::endl;
+    std::cout << name << " started" << std::endl;
 }
 
 void Computer::Application::close()
 {
-    std::cout << Computer::Application::name << " closed" << std::endl;
+    std::cout << name << " closed" << std::endl;
 }
 
 void Computer::Application::install(std::string filePath)
 {
-    std::cout << Computer::Application::name << " installed on " << filePath << std::endl;
+    std::cout << name << " installed on " << filePath << std::endl;
 }
 
 void Computer::Application::printThisApplicationSize()
