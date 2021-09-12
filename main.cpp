@@ -474,6 +474,18 @@ struct RentalService
 
     void goOnTour(int tourDistance);    
     void prepareComputer();
+
+    JUCE_LEAK_DETECTOR(RentalService)
+};
+
+struct RentalServiceWrapper
+{
+    RentalServiceWrapper(RentalService* ptr) : pointerToRentalService(ptr) { }
+    ~RentalServiceWrapper()
+    {
+        delete pointerToRentalService;
+    }
+    RentalService* pointerToRentalService = nullptr;
 };
 
 RentalService::RentalService()
@@ -567,9 +579,9 @@ int main()
     guitarCenter.pointerToMusicStore->printThisLesPaulBlackFridayPrice(10);
     std::cout << "============================================================" << std::endl;
 
-    RentalService tourRentals;
-    tourRentals.prepareComputer(); 
-    tourRentals.goOnTour(250);
+    RentalServiceWrapper tourRentals( new RentalService() );
+    tourRentals.pointerToRentalService->prepareComputer(); 
+    tourRentals.pointerToRentalService->goOnTour(250);
     std::cout << "============================================================" << std::endl;
 
     std::cout << "good to go!" << std::endl;
