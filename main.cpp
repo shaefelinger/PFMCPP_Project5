@@ -58,6 +58,7 @@ You don't have to do this, you can keep your current object name and just change
  copied UDT 1:
  */
 #include <iostream>
+#include "LeakedObjectDetector.h"
 
 struct ElectricGuitar
 {
@@ -92,6 +93,19 @@ struct ElectricGuitar
     };
 
     GuitarString string1; 
+    JUCE_LEAK_DETECTOR(ElectricGuitar)
+};
+
+
+struct ElectricGuitarWrapper
+{
+    ElectricGuitarWrapper(ElectricGuitar* ptr) : pointerToElectricGuitar(ptr) { }
+    ~ElectricGuitarWrapper()
+    {
+        delete pointerToElectricGuitar;
+    }
+
+    ElectricGuitar* pointerToElectricGuitar = nullptr;
 };
 
 ElectricGuitar::ElectricGuitar(std::string guitarManufacturer, std::string guitarName, float guitarPrice) : 
@@ -470,8 +484,10 @@ void RentalService::prepareComputer()
 #include <iostream>
 int main()
 {
-    ElectricGuitar telecaster { "Fender", "Telecaster", 1899.99f };
-    telecaster.plugIn("green");
+    // ElectricGuitar telecaster { "Fender", "Telecaster", 1899.99f };
+    ElectricGuitarWrapper telecaster( new ElectricGuitar("Fender", "Telecaster", 1899.99f) );
+    // telecaster.pointerToElectricguitar->plugIn("green");
+    /* 
     telecaster.selectPickup(1);
     telecaster.changeVolume(9.9f);
     telecaster.string1.breakString();
@@ -482,6 +498,7 @@ int main()
     std::cout << "String-Manufacturer: " << telecaster.string1.manufacturer << std::endl;
     telecaster.printThisStringManufacturer();
     telecaster.turnUpVolume();
+    */
     std::cout << "============================================================" << std::endl;
 
     Computer macbook { "Apple", "MacOs" };
