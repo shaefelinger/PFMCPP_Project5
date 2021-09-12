@@ -96,7 +96,6 @@ struct ElectricGuitar
     JUCE_LEAK_DETECTOR(ElectricGuitar)
 };
 
-
 struct ElectricGuitarWrapper
 {
     ElectricGuitarWrapper(ElectricGuitar* ptr) : pointerToElectricGuitar(ptr) { }
@@ -213,6 +212,18 @@ struct Computer
         void printThisApplicationSize();
     };
     Application logicPro;
+
+    JUCE_LEAK_DETECTOR(Computer)
+};
+
+struct ComputerWrapper
+{
+    ComputerWrapper(Computer* ptr) : pointerToComputer(ptr) { }
+    ~ComputerWrapper()
+    {
+        delete pointerToComputer;
+    }
+    Computer* pointerToComputer = nullptr;
 };
 
 Computer::Computer(std::string computerManufacturer, std::string computerOS) : 
@@ -303,6 +314,18 @@ struct Bus
     void drive (int distance);
 
     void printThisBusInfo();
+
+    JUCE_LEAK_DETECTOR(Bus)
+};
+
+struct BusWrapper
+{
+    BusWrapper(Bus* ptr) : pointerToBus(ptr) { }
+    ~BusWrapper()
+    {
+        delete pointerToBus;
+    }
+    Bus* pointerToBus = nullptr;
 };
 
 Bus::Bus() : 
@@ -499,27 +522,31 @@ int main()
    
     std::cout << "============================================================" << std::endl;
 
-    Computer macbook { "Apple", "MacOs" };
-    macbook.runProgram("Ableton", 10);
-    macbook.shutDown();
-    macbook.eraseDisk("Macintosh HD");
-    macbook.logicPro.start();
-    macbook.logicPro.close();
-    macbook.logicPro.install("Macintosh HD");
-    macbook.showInfo();
-    std::cout << macbook.logicPro.name << " by " << macbook.logicPro.manufacturer << " has a size of " << macbook.logicPro.size << " GB" << std::endl;
-    macbook.logicPro.printThisApplicationSize();
-    macbook.powerOffCountdown();
+    // Computer macbook { "Apple", "MacOs" };
+    ComputerWrapper macbook ( new Computer ("Apple", "MacOs"));
+    macbook.pointerToComputer->runProgram("Ableton", 10);
+    
+    macbook.pointerToComputer->shutDown();
+    macbook.pointerToComputer->eraseDisk("Macintosh HD");
+    macbook.pointerToComputer->logicPro.start();
+    macbook.pointerToComputer->logicPro.close();
+    macbook.pointerToComputer->logicPro.install("Macintosh HD");
+    macbook.pointerToComputer->showInfo();
+    std::cout << macbook.pointerToComputer->logicPro.name << " by " << macbook.pointerToComputer->logicPro.manufacturer << " has a size of " << macbook.pointerToComputer->logicPro.size << " GB" << std::endl;
+    macbook.pointerToComputer->logicPro.printThisApplicationSize();
+    macbook.pointerToComputer->powerOffCountdown();
+    
     std::cout << "============================================================" << std::endl;
 
-    Bus schoolBus;
-    schoolBus.startEngine();
-    schoolBus.turnLeft(30);
-    schoolBus.openDoors(false);
-    schoolBus.openDoors(true);
-    std::cout << "The Bus made by " << schoolBus.manufacturer << " has " << schoolBus.numberOfSeats << " Seats and a maxiumum speed of " << schoolBus.maximumSpeed << " km/h" << std::endl;
-    schoolBus.printThisBusInfo();
-    schoolBus.drive(1500);
+    // Bus schoolBus;
+    BusWrapper schoolBus( new Bus() );
+    schoolBus.pointerToBus->startEngine();
+    schoolBus.pointerToBus->turnLeft(30);
+    schoolBus.pointerToBus->openDoors(false);
+    schoolBus.pointerToBus->openDoors(true);
+    std::cout << "The Bus made by " << schoolBus.pointerToBus->manufacturer << " has " << schoolBus.pointerToBus->numberOfSeats << " Seats and a maxiumum speed of " << schoolBus.pointerToBus->maximumSpeed << " km/h" << std::endl;
+    schoolBus.pointerToBus->printThisBusInfo();
+    schoolBus.pointerToBus->drive(1500);
     std::cout << "============================================================" << std::endl;
 
     RentalService tourRentals;
