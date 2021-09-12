@@ -104,7 +104,6 @@ struct ElectricGuitarWrapper
     {
         delete pointerToElectricGuitar;
     }
-
     ElectricGuitar* pointerToElectricGuitar = nullptr;
 };
 
@@ -486,19 +485,18 @@ int main()
 {
     // ElectricGuitar telecaster { "Fender", "Telecaster", 1899.99f };
     ElectricGuitarWrapper telecaster( new ElectricGuitar("Fender", "Telecaster", 1899.99f) );
-    // telecaster.pointerToElectricguitar->plugIn("green");
-    /* 
-    telecaster.selectPickup(1);
-    telecaster.changeVolume(9.9f);
-    telecaster.string1.breakString();
-    telecaster.string1.tuneString(442.2f);
-    telecaster.string1.pluckString(12);
-    std::cout << "Price: " << telecaster.price << std::endl;
-    telecaster.printThisPrice();
-    std::cout << "String-Manufacturer: " << telecaster.string1.manufacturer << std::endl;
-    telecaster.printThisStringManufacturer();
-    telecaster.turnUpVolume();
-    */
+    telecaster.pointerToElectricGuitar->plugIn("green");
+    telecaster.pointerToElectricGuitar->selectPickup(1);
+    telecaster.pointerToElectricGuitar->changeVolume(9.9f);
+    telecaster.pointerToElectricGuitar->string1.breakString();
+    telecaster.pointerToElectricGuitar->string1.tuneString(442.2f);
+    telecaster.pointerToElectricGuitar->string1.pluckString(12);
+    std::cout << "Price: " << telecaster.pointerToElectricGuitar->price << std::endl;
+    telecaster.pointerToElectricGuitar->printThisPrice();
+    std::cout << "String-Manufacturer: " << telecaster.pointerToElectricGuitar->string1.manufacturer << std::endl;
+    telecaster.pointerToElectricGuitar->printThisStringManufacturer();
+    telecaster.pointerToElectricGuitar->turnUpVolume();
+   
     std::cout << "============================================================" << std::endl;
 
     Computer macbook { "Apple", "MacOs" };
