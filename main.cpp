@@ -407,6 +407,18 @@ struct MusicStore
     void printThisBlackFidayPrice(int discount, float originalPrice);
 
     void printThisLesPaulBlackFridayPrice(int discount);
+
+    JUCE_LEAK_DETECTOR(MusicStore)
+};
+
+struct MusicStoreWrapper
+{
+    MusicStoreWrapper(MusicStore* ptr) : pointerToMusicStore(ptr) { }
+    ~MusicStoreWrapper()
+    {
+        delete pointerToMusicStore;
+    }
+    MusicStore* pointerToMusicStore = nullptr;
 };
 
 MusicStore::MusicStore()
@@ -506,7 +518,6 @@ void RentalService::prepareComputer()
 #include <iostream>
 int main()
 {
-    // ElectricGuitar telecaster { "Fender", "Telecaster", 1899.99f };
     ElectricGuitarWrapper telecaster( new ElectricGuitar("Fender", "Telecaster", 1899.99f) );
     telecaster.pointerToElectricGuitar->plugIn("green");
     telecaster.pointerToElectricGuitar->selectPickup(1);
@@ -522,7 +533,6 @@ int main()
    
     std::cout << "============================================================" << std::endl;
 
-    // Computer macbook { "Apple", "MacOs" };
     ComputerWrapper macbook ( new Computer ("Apple", "MacOs"));
     macbook.pointerToComputer->runProgram("Ableton", 10);
     
@@ -538,7 +548,6 @@ int main()
     
     std::cout << "============================================================" << std::endl;
 
-    // Bus schoolBus;
     BusWrapper schoolBus( new Bus() );
     schoolBus.pointerToBus->startEngine();
     schoolBus.pointerToBus->turnLeft(30);
@@ -549,18 +558,18 @@ int main()
     schoolBus.pointerToBus->drive(1500);
     std::cout << "============================================================" << std::endl;
 
+    MusicStoreWrapper guitarCenter( new MusicStore() );
+    std::cout << "The value of the Guitars is $" << guitarCenter.pointerToMusicStore->valueOfGuitars() << std::endl;
+    guitarCenter.pointerToMusicStore->printThisGuitarValue();
+    std::cout << guitarCenter.pointerToMusicStore->calculateBlackFridayPrice(20, 1000.0f) << std::endl;
+    guitarCenter.pointerToMusicStore->printThisBlackFidayPrice(20, 1000.0f);
+    std::cout << guitarCenter.pointerToMusicStore->calculateBlackFridayPrice(10, guitarCenter.pointerToMusicStore->lesPaul.price) << std::endl;
+    guitarCenter.pointerToMusicStore->printThisLesPaulBlackFridayPrice(10);
+    std::cout << "============================================================" << std::endl;
+
     RentalService tourRentals;
     tourRentals.prepareComputer(); 
     tourRentals.goOnTour(250);
-    std::cout << "============================================================" << std::endl;
-    
-    MusicStore guitarCenter;
-    std::cout << "The value of the Guitars is $" << guitarCenter.valueOfGuitars() << std::endl;
-    guitarCenter.printThisGuitarValue();
-    std::cout << guitarCenter.calculateBlackFridayPrice(20, 1000.0f) << std::endl;
-    guitarCenter.printThisBlackFidayPrice(20, 1000.0f);
-    std::cout << guitarCenter.calculateBlackFridayPrice(10, guitarCenter.lesPaul.price) << std::endl;
-    guitarCenter.printThisLesPaulBlackFridayPrice(10);
     std::cout << "============================================================" << std::endl;
 
     std::cout << "good to go!" << std::endl;
