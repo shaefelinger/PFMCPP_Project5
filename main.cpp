@@ -177,6 +177,7 @@ void ElectricGuitar::GuitarString::pluckString(int fret)
 /*
  copied UDT 2:
  */
+
 struct Computer
 {
     Computer(std::string computerManufacturer, std::string computerOS);
