@@ -51,13 +51,11 @@ You don't have to do this, you can keep your current object name and just change
  */
 
 
-
-
-
 /*
  copied UDT 1:
  */
 #include <iostream>
+#include "LeakedObjectDetector.h"
 
 struct ElectricGuitar
 {
@@ -92,6 +90,17 @@ struct ElectricGuitar
     };
 
     GuitarString string1; 
+    JUCE_LEAK_DETECTOR(ElectricGuitar)
+};
+
+struct ElectricGuitarWrapper
+{
+    ElectricGuitarWrapper(ElectricGuitar* ptr) : pointerToElectricGuitar(ptr) { }
+    ~ElectricGuitarWrapper()
+    {
+        delete pointerToElectricGuitar;
+    }
+    ElectricGuitar* pointerToElectricGuitar = nullptr;
 };
 
 ElectricGuitar::ElectricGuitar(std::string guitarManufacturer, std::string guitarName, float guitarPrice) : 
@@ -168,6 +177,7 @@ void ElectricGuitar::GuitarString::pluckString(int fret)
 /*
  copied UDT 2:
  */
+
 struct Computer
 {
     Computer(std::string computerManufacturer, std::string computerOS);
@@ -200,6 +210,18 @@ struct Computer
         void printThisApplicationSize();
     };
     Application logicPro;
+
+    JUCE_LEAK_DETECTOR(Computer)
+};
+
+struct ComputerWrapper
+{
+    ComputerWrapper(Computer* ptr) : pointerToComputer(ptr) { }
+    ~ComputerWrapper()
+    {
+        delete pointerToComputer;
+    }
+    Computer* pointerToComputer = nullptr;
 };
 
 Computer::Computer(std::string computerManufacturer, std::string computerOS) : 
@@ -290,6 +312,18 @@ struct Bus
     void drive (int distance);
 
     void printThisBusInfo();
+
+    JUCE_LEAK_DETECTOR(Bus)
+};
+
+struct BusWrapper
+{
+    BusWrapper(Bus* ptr) : pointerToBus(ptr) { }
+    ~BusWrapper()
+    {
+        delete pointerToBus;
+    }
+    Bus* pointerToBus = nullptr;
 };
 
 Bus::Bus() : 
@@ -371,6 +405,18 @@ struct MusicStore
     void printThisBlackFidayPrice(int discount, float originalPrice);
 
     void printThisLesPaulBlackFridayPrice(int discount);
+
+    JUCE_LEAK_DETECTOR(MusicStore)
+};
+
+struct MusicStoreWrapper
+{
+    MusicStoreWrapper(MusicStore* ptr) : pointerToMusicStore(ptr) { }
+    ~MusicStoreWrapper()
+    {
+        delete pointerToMusicStore;
+    }
+    MusicStore* pointerToMusicStore = nullptr;
 };
 
 MusicStore::MusicStore()
@@ -426,6 +472,18 @@ struct RentalService
 
     void goOnTour(int tourDistance);    
     void prepareComputer();
+
+    JUCE_LEAK_DETECTOR(RentalService)
+};
+
+struct RentalServiceWrapper
+{
+    RentalServiceWrapper(RentalService* ptr) : pointerToRentalService(ptr) { }
+    ~RentalServiceWrapper()
+    {
+        delete pointerToRentalService;
+    }
+    RentalService* pointerToRentalService = nullptr;
 };
 
 RentalService::RentalService()
@@ -470,55 +528,58 @@ void RentalService::prepareComputer()
 #include <iostream>
 int main()
 {
-    ElectricGuitar telecaster { "Fender", "Telecaster", 1899.99f };
-    telecaster.plugIn("green");
-    telecaster.selectPickup(1);
-    telecaster.changeVolume(9.9f);
-    telecaster.string1.breakString();
-    telecaster.string1.tuneString(442.2f);
-    telecaster.string1.pluckString(12);
-    std::cout << "Price: " << telecaster.price << std::endl;
-    telecaster.printThisPrice();
-    std::cout << "String-Manufacturer: " << telecaster.string1.manufacturer << std::endl;
-    telecaster.printThisStringManufacturer();
-    telecaster.turnUpVolume();
+    ElectricGuitarWrapper telecaster( new ElectricGuitar("Fender", "Telecaster", 1899.99f) );
+    telecaster.pointerToElectricGuitar->plugIn("green");
+    telecaster.pointerToElectricGuitar->selectPickup(1);
+    telecaster.pointerToElectricGuitar->changeVolume(9.9f);
+    telecaster.pointerToElectricGuitar->string1.breakString();
+    telecaster.pointerToElectricGuitar->string1.tuneString(442.2f);
+    telecaster.pointerToElectricGuitar->string1.pluckString(12);
+    std::cout << "Price: " << telecaster.pointerToElectricGuitar->price << std::endl;
+    telecaster.pointerToElectricGuitar->printThisPrice();
+    std::cout << "String-Manufacturer: " << telecaster.pointerToElectricGuitar->string1.manufacturer << std::endl;
+    telecaster.pointerToElectricGuitar->printThisStringManufacturer();
+    telecaster.pointerToElectricGuitar->turnUpVolume();
+   
     std::cout << "============================================================" << std::endl;
 
-    Computer macbook { "Apple", "MacOs" };
-    macbook.runProgram("Ableton", 10);
-    macbook.shutDown();
-    macbook.eraseDisk("Macintosh HD");
-    macbook.logicPro.start();
-    macbook.logicPro.close();
-    macbook.logicPro.install("Macintosh HD");
-    macbook.showInfo();
-    std::cout << macbook.logicPro.name << " by " << macbook.logicPro.manufacturer << " has a size of " << macbook.logicPro.size << " GB" << std::endl;
-    macbook.logicPro.printThisApplicationSize();
-    macbook.powerOffCountdown();
-    std::cout << "============================================================" << std::endl;
-
-    Bus schoolBus;
-    schoolBus.startEngine();
-    schoolBus.turnLeft(30);
-    schoolBus.openDoors(false);
-    schoolBus.openDoors(true);
-    std::cout << "The Bus made by " << schoolBus.manufacturer << " has " << schoolBus.numberOfSeats << " Seats and a maxiumum speed of " << schoolBus.maximumSpeed << " km/h" << std::endl;
-    schoolBus.printThisBusInfo();
-    schoolBus.drive(1500);
-    std::cout << "============================================================" << std::endl;
-
-    RentalService tourRentals;
-    tourRentals.prepareComputer(); 
-    tourRentals.goOnTour(250);
-    std::cout << "============================================================" << std::endl;
+    ComputerWrapper macbook ( new Computer ("Apple", "MacOs"));
+    macbook.pointerToComputer->runProgram("Ableton", 10);
     
-    MusicStore guitarCenter;
-    std::cout << "The value of the Guitars is $" << guitarCenter.valueOfGuitars() << std::endl;
-    guitarCenter.printThisGuitarValue();
-    std::cout << guitarCenter.calculateBlackFridayPrice(20, 1000.0f) << std::endl;
-    guitarCenter.printThisBlackFidayPrice(20, 1000.0f);
-    std::cout << guitarCenter.calculateBlackFridayPrice(10, guitarCenter.lesPaul.price) << std::endl;
-    guitarCenter.printThisLesPaulBlackFridayPrice(10);
+    macbook.pointerToComputer->shutDown();
+    macbook.pointerToComputer->eraseDisk("Macintosh HD");
+    macbook.pointerToComputer->logicPro.start();
+    macbook.pointerToComputer->logicPro.close();
+    macbook.pointerToComputer->logicPro.install("Macintosh HD");
+    macbook.pointerToComputer->showInfo();
+    std::cout << macbook.pointerToComputer->logicPro.name << " by " << macbook.pointerToComputer->logicPro.manufacturer << " has a size of " << macbook.pointerToComputer->logicPro.size << " GB" << std::endl;
+    macbook.pointerToComputer->logicPro.printThisApplicationSize();
+    macbook.pointerToComputer->powerOffCountdown();
+    
+    std::cout << "============================================================" << std::endl;
+
+    BusWrapper schoolBus( new Bus() );
+    schoolBus.pointerToBus->startEngine();
+    schoolBus.pointerToBus->turnLeft(30);
+    schoolBus.pointerToBus->openDoors(false);
+    schoolBus.pointerToBus->openDoors(true);
+    std::cout << "The Bus made by " << schoolBus.pointerToBus->manufacturer << " has " << schoolBus.pointerToBus->numberOfSeats << " Seats and a maxiumum speed of " << schoolBus.pointerToBus->maximumSpeed << " km/h" << std::endl;
+    schoolBus.pointerToBus->printThisBusInfo();
+    schoolBus.pointerToBus->drive(1500);
+    std::cout << "============================================================" << std::endl;
+
+    MusicStoreWrapper guitarCenter( new MusicStore() );
+    std::cout << "The value of the Guitars is $" << guitarCenter.pointerToMusicStore->valueOfGuitars() << std::endl;
+    guitarCenter.pointerToMusicStore->printThisGuitarValue();
+    std::cout << guitarCenter.pointerToMusicStore->calculateBlackFridayPrice(20, 1000.0f) << std::endl;
+    guitarCenter.pointerToMusicStore->printThisBlackFidayPrice(20, 1000.0f);
+    std::cout << guitarCenter.pointerToMusicStore->calculateBlackFridayPrice(10, guitarCenter.pointerToMusicStore->lesPaul.price) << std::endl;
+    guitarCenter.pointerToMusicStore->printThisLesPaulBlackFridayPrice(10);
+    std::cout << "============================================================" << std::endl;
+
+    RentalServiceWrapper tourRentals( new RentalService() );
+    tourRentals.pointerToRentalService->prepareComputer(); 
+    tourRentals.pointerToRentalService->goOnTour(250);
     std::cout << "============================================================" << std::endl;
 
     std::cout << "good to go!" << std::endl;
