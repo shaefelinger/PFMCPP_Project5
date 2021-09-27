@@ -161,338 +161,28 @@ void ElectricGuitar::GuitarString::pluckString(int fret)
  copied UDT 2:
  */
 
-struct Computer
-{
-    Computer(std::string computerManufacturer, std::string computerOS);
-    ~Computer();
 
-    std::string manufacturer = "Apple";
-    std::string operatingSystem = "MacOS";
-    int amountOfRam;
-    float processorSpeed {2.4f};
-    int sizeOfDisk = 4;
 
-    void runProgram(std::string program, int priority);
-    void shutDown();
-    void eraseDisk(std::string volumeName);
-    void showInfo();
-    void powerOffCountdown();
-
-    struct Application
-    {
-        std::string name = "Logic Pro";
-        std::string manufacturer = "Apple";
-        std::string appType = "audio";
-        float size = 1.1f;
-        std::string version = "10.5";
-
-        void start();
-        void close();
-        void install(std::string filePath);
-
-        void printThisApplicationSize();
-    };
-    Application logicPro;
-
-    JUCE_LEAK_DETECTOR(Computer)
-};
-
-struct ComputerWrapper
-{
-    ComputerWrapper(Computer* ptr) : pointerToComputer(ptr) { }
-    ~ComputerWrapper()
-    {
-        delete pointerToComputer;
-    }
-    Computer* pointerToComputer = nullptr;
-};
-
-Computer::Computer(std::string computerManufacturer, std::string computerOS) : 
-manufacturer(computerManufacturer),
-operatingSystem(computerOS),
-amountOfRam(8)
-{
-    std::cout << "CONSTRUCTING Computer: " << manufacturer << " - running " << operatingSystem << std::endl;
-    logicPro.start();
-}
-
-Computer::~Computer()
-{
-    std::cout << "DESTRUCTING Computer" << std::endl;
-    logicPro.close();
-    shutDown();
-}
-
-void Computer::runProgram(std::string program, int priority)
-{
-    std::cout << "Running " << program << " with priority " << priority << std::endl;
-}
-
-void Computer::shutDown()
-{
-    std::cout << "Computer " << manufacturer << " shut down!" << std::endl;
-}
-
-void Computer::eraseDisk(std::string volumeName)
-{
-    std::cout << "Erased Disk " << volumeName << std::endl;
-}
-
-void Computer::showInfo()
-{
-    std::cout << "The Computer has " << amountOfRam << "GB of RAM and a processor speed of " << processorSpeed << " GHz" << std::endl;
-}
-
-void Computer::powerOffCountdown() 
-{
-    int i = 10;
-    while (i > 0)
-    {
-        std::cout << "Power off in " << i << std::endl;
-        --i;
-    }
-    shutDown();
-} 
-
-void Computer::Application::start()
-{
-    std::cout << name << " started" << std::endl;
-}
-
-void Computer::Application::close()
-{
-    std::cout << name << " closed" << std::endl;
-}
-
-void Computer::Application::install(std::string filePath)
-{
-    std::cout << name << " installed on " << filePath << std::endl;
-}
-
-void Computer::Application::printThisApplicationSize()
-{
-    std::cout << "This " << this->name << " by " << this->manufacturer << " has a size of " << this->size << " GB" << std::endl;
-}
 // ============================================================
 
 /*
  copied UDT 3:
  */
-struct Bus
-{
-    Bus();
-    ~Bus();
-    
-    int maximumSpeed { 110 };
-    int numberOfSeats;
-    std::string manufacturer = "MAN";
-    float fuelConsumption = 20.3f;
-    float fuelCapacity { 200.0f };
 
-    void startEngine();
-    void turnLeft(int angle);
-    void openDoors(bool openAllDoors);
-    void drive (int distance);
-
-    void printThisBusInfo();
-
-    JUCE_LEAK_DETECTOR(Bus)
-};
-
-struct BusWrapper
-{
-    BusWrapper(Bus* ptr) : pointerToBus(ptr) { }
-    ~BusWrapper()
-    {
-        delete pointerToBus;
-    }
-    Bus* pointerToBus = nullptr;
-};
-
-Bus::Bus() : 
-numberOfSeats(24) 
-{
-    std::cout << "CONSTRUCTING Bus" << std::endl;
-}
-
-Bus::~Bus() 
-{
-    std::cout << "DESTRUCTING Bus" << std::endl;
-}
-
-void Bus::startEngine()
-{
-    std::cout << "Engine of Bus started. The maximum speed is " << maximumSpeed << " km/h" <<std::endl;
-}
-
-void Bus::turnLeft(int angle)
-{
-    std::cout << "Turned left " << angle << " degrees" << std::endl;
-}
-
-void Bus::openDoors(bool openAllDoors)
-{
-    if(openAllDoors)
-    {
-        std::cout << "Opened all doors" << std::endl;
-    }
-    else 
-    {
-        std::cout << "Opened a single door" << std::endl;
-    }
-}
-
-void Bus::drive (int distance) 
-{
-    float fuelLeft, fuelUsed;
-    int i = 0; 
-    while ( i <= distance )
-    {
-        fuelUsed =  i * fuelConsumption / 100;
-        fuelLeft =  fuelCapacity - fuelUsed;
-
-        if ( fuelLeft < 0 ) 
-        {
-            std::cout << "YOU RAN OUT OF FUEL!!!" << std::endl;
-            break;
-        }
-
-        std::cout << "You have driven " << i << " Km and used " << fuelUsed << " liters of fuel. You have " << fuelLeft << " liters left." << std::endl;
-        i += 50;        
-    }
-}
-
-void Bus::printThisBusInfo()
-{
-    std::cout << "This Bus made by " << this->manufacturer << " has " << this->numberOfSeats << " Seats and a maxiumum speed of " << this->maximumSpeed << " km/h" << std::endl;
-}
 // ============================================================
 
 /*
  new UDT 4:
  with 2 member functions
  */
-struct MusicStore
-{
-    MusicStore();
-    ~MusicStore();
 
-    ElectricGuitar lesPaul { "Gibson", "Les Paul", 3289.99f };
-    ElectricGuitar stratocaster { "Fender", "Stratocaster", 2399.99f };
-    Computer officePc { "Asus", "Windows 95" };
-
-    float valueOfGuitars();
-    float calculateBlackFridayPrice(int discount, float originalPrice);
-
-    void printThisGuitarValue();
-    void printThisBlackFidayPrice(int discount, float originalPrice);
-
-    void printThisLesPaulBlackFridayPrice(int discount);
-
-    JUCE_LEAK_DETECTOR(MusicStore)
-};
-
-struct MusicStoreWrapper
-{
-    MusicStoreWrapper(MusicStore* ptr) : pointerToMusicStore(ptr) { }
-    ~MusicStoreWrapper()
-    {
-        delete pointerToMusicStore;
-    }
-    MusicStore* pointerToMusicStore = nullptr;
-};
-
-MusicStore::MusicStore()
-{
-    std::cout << "CONSTRUCTING Music Store" << std::endl;
-}
-
-MusicStore::~MusicStore()
-{
-    std::cout << "DESTRUCTING Music Store" << std::endl;
-}
-
-float MusicStore::valueOfGuitars() 
-{
-    return lesPaul.price + stratocaster.price;
-}
-
-float MusicStore::calculateBlackFridayPrice(int discount, float originalPrice)
-{
-    std::cout << "Huge Black Friday Discount!! Get " << discount << " percent of!! Old Price: $" << originalPrice << " New Price: $";
-    return originalPrice * ( 100 - discount ) * 0.01f ;
-}
-
-void MusicStore::printThisGuitarValue()
-{
-    std::cout << "This value of the Guitars is $" << this->valueOfGuitars() << std::endl;
-}
-
-void MusicStore::printThisBlackFidayPrice(int discount, float originalPrice)
-{
-    std::cout << "This " << this->calculateBlackFridayPrice(discount, originalPrice) << std::endl;
-}
-
-void MusicStore::printThisLesPaulBlackFridayPrice(int discount)
-{
-    std::cout << "This Les Paul " << this->calculateBlackFridayPrice(discount, this->lesPaul.price) << std::endl;
-}
 
 /*
  new UDT 5:
  with 2 member functions
  */
 
-struct RentalService
-{
-    RentalService();
-    ~RentalService();
 
-    Bus luxuryNightliner;
-    Bus tourBus;
-    ElectricGuitar cheapGuitar { "NoName", "Cheap Chinese Copy", 99.f };
-    Computer rentalLaptop { "HP", "Windows 10" };
-
-    void goOnTour(int tourDistance);    
-    void prepareComputer();
-
-    JUCE_LEAK_DETECTOR(RentalService)
-};
-
-struct RentalServiceWrapper
-{
-    RentalServiceWrapper(RentalService* ptr) : pointerToRentalService(ptr) { }
-    ~RentalServiceWrapper()
-    {
-        delete pointerToRentalService;
-    }
-    RentalService* pointerToRentalService = nullptr;
-};
-
-RentalService::RentalService()
-{
-    std::cout << "CONSTRUCTING Rental Service" << std::endl;
-    goOnTour(50);
-}
-
-RentalService::~RentalService()
-{
-    std::cout << "DESTRUCTING Rental Service" << std::endl;
-}
-
-void RentalService::goOnTour(int tourDistance)
-{
-    std::cout << "Tour Start:" << std::endl;
-    tourBus.drive(tourDistance);
-}
-
-void RentalService::prepareComputer()
-{
-    std::cout << "Preparing " << rentalLaptop.manufacturer << " Computer for rental:" << std::endl; 
-    rentalLaptop.showInfo();
-    rentalLaptop.eraseDisk("C:");
-    rentalLaptop.runProgram("Pro Tools", 2);
-}
 
 /*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
@@ -509,6 +199,14 @@ void RentalService::prepareComputer()
  */
 
 #include <iostream>
+
+#include "Computer.h"
+#include "Bus.h"
+#include "MusicStore.h"
+#include "RentalService.h"
+
+#include "Wrappers.h"
+
 int main()
 {
     ElectricGuitarWrapper telecaster( new ElectricGuitar("Fender", "Telecaster", 1899.99f) );
