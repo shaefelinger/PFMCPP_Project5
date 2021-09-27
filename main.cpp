@@ -32,42 +32,6 @@
 
 
 /*
- copied UDT 1:
- */
-#include <iostream>
-#include "LeakedObjectDetector.h"
-
-
-
-// ============================================================
-/*
- copied UDT 2:
- */
-
-
-
-// ============================================================
-
-/*
- copied UDT 3:
- */
-
-// ============================================================
-
-/*
- new UDT 4:
- with 2 member functions
- */
-
-
-/*
- new UDT 5:
- with 2 member functions
- */
-
-
-
-/*
  MAKE SURE YOU ARE NOT ON THE MASTER BRANCH
 
  Commit your changes by clicking on the Source Control panel on the left, entering a message, and click [Commit and push].

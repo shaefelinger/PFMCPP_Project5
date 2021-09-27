@@ -1,7 +1,6 @@
 #include <iostream>
 #include "MusicStore.h"
 
-
 MusicStore::MusicStore()
 {
     std::cout << "CONSTRUCTING Music Store" << std::endl;

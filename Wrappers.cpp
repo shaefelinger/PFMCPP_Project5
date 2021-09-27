@@ -6,7 +6,6 @@
 #include "MusicStore.h"
 #include "RentalService.h"
 
-
 ElectricGuitarWrapper::ElectricGuitarWrapper(ElectricGuitar* ptr) : pointerToElectricGuitar(ptr) { }
 ElectricGuitarWrapper::~ElectricGuitarWrapper()
 {

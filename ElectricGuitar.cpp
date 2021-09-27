@@ -1,7 +1,6 @@
 #include <iostream>
 #include "ElectricGuitar.h"
 
-
 ElectricGuitar::ElectricGuitar(std::string guitarManufacturer, std::string guitarName, float guitarPrice) : 
 manufacturer(guitarManufacturer),
 name(guitarName), 

@@ -25,4 +25,3 @@ struct MusicStore
     JUCE_LEAK_DETECTOR(MusicStore)
 };
 
-

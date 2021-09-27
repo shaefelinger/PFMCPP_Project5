@@ -12,7 +12,6 @@ struct Bus;
 struct MusicStore;
 struct RentalService;
 
-
 // ElectricGuitar
 struct ElectricGuitarWrapper
 {

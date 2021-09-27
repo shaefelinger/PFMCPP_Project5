@@ -1,7 +1,6 @@
 #include <iostream>
 #include "Bus.h"
 
-
 Bus::Bus() : 
 numberOfSeats(24) 
 {
