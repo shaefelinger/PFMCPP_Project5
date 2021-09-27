@@ -2,6 +2,7 @@
 
 #include "LeakedObjectDetector.h"
 #include "Bus.h"
+#include "ElectricGuitar.h"
 #include "Computer.h"
 
 struct RentalService

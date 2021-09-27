@@ -1,14 +1,26 @@
 #pragma once
 
+#include "ElectricGuitar.h"
 #include "Computer.h"
 #include "Bus.h"
 #include "MusicStore.h"
 #include "RentalService.h"
 
+struct ElectricGuitar;
 struct Computer;
 struct Bus;
 struct MusicStore;
 struct RentalService;
+
+
+// ElectricGuitar
+struct ElectricGuitarWrapper
+{
+    ElectricGuitarWrapper(ElectricGuitar* ptr);
+    ~ElectricGuitarWrapper();
+ 
+    ElectricGuitar* pointerToElectricGuitar = nullptr;
+};
 
 
 // Computer

@@ -1,9 +1,17 @@
 #include "Wrappers.h"
 
+#include "ElectricGuitar.h"
 #include "Computer.h"
 #include "Bus.h"
 #include "MusicStore.h"
 #include "RentalService.h"
+
+
+ElectricGuitarWrapper::ElectricGuitarWrapper(ElectricGuitar* ptr) : pointerToElectricGuitar(ptr) { }
+ElectricGuitarWrapper::~ElectricGuitarWrapper()
+{
+    delete pointerToElectricGuitar;
+}
 
 // Computer
 ComputerWrapper::ComputerWrapper(Computer* ptr) : pointerToComputer(ptr) { }
@@ -20,9 +28,7 @@ BusWrapper::~BusWrapper()
 }
 
 // MusicStore
-MusicStoreWrapper::MusicStoreWrapper(MusicStore* ptr) : 
-pointerToMusicStore(ptr) 
-{}
+MusicStoreWrapper::MusicStoreWrapper(MusicStore* ptr) : pointerToMusicStore(ptr){}
 
 MusicStoreWrapper::~MusicStoreWrapper()
 {

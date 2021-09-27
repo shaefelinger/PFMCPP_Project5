@@ -31,130 +31,13 @@
  */
 
 
-
-
-
 /*
  copied UDT 1:
  */
 #include <iostream>
 #include "LeakedObjectDetector.h"
 
-struct ElectricGuitar
-{
-    ElectricGuitar(std::string guitarManufacturer, std::string guitarName, float guitarPrice);
-    ~ElectricGuitar();
 
-    std::string manufacturer; 
-    std::string name;
-    float price;    
-    std::string color = "blue";
-    int numberOfStrings = 6;
-
-    void plugIn(std::string cableColor);
-    void selectPickup(int pickup);
-    void changeVolume(float volume);
-    void turnUpVolume();
-
-    void printThisPrice();
-    void printThisStringManufacturer();
-
-    struct GuitarString
-    {
-        std::string manufacturer = "Ernie Ball";
-        int number = 1;
-        bool isWound = true;
-        float width = 0.52f;
-        std::string material = "steel";
-
-        void breakString();
-        void tuneString (float referencePitch);
-        void pluckString(int fret); 
-    };
-
-    GuitarString string1; 
-    JUCE_LEAK_DETECTOR(ElectricGuitar)
-};
-
-struct ElectricGuitarWrapper
-{
-    ElectricGuitarWrapper(ElectricGuitar* ptr) : pointerToElectricGuitar(ptr) { }
-    ~ElectricGuitarWrapper()
-    {
-        delete pointerToElectricGuitar;
-    }
-    ElectricGuitar* pointerToElectricGuitar = nullptr;
-};
-
-ElectricGuitar::ElectricGuitar(std::string guitarManufacturer, std::string guitarName, float guitarPrice) : 
-manufacturer(guitarManufacturer),
-name(guitarName), 
-price(guitarPrice) 
-{ 
-    std::cout << "CONSTRUCTING ElectricGuitar " << manufacturer << " " << name << " $" << price << std::endl;
-}
-
-ElectricGuitar::~ElectricGuitar()
-{
-    std::cout << "DESTRUCTING ElectricGuitar " << manufacturer << " " << name << std::endl;
-    string1.breakString();
-}
-
-void ElectricGuitar::plugIn(std::string cableColor)
-{
-    std::cout << "You have plugged the " << cableColor << " cable into the " << color <<  " " << name <<std::endl;
-}
-
-void ElectricGuitar::selectPickup(int pickup)
-{
-    std::cout << "Switched to pickup " << pickup << std::endl;
-}
-
-void ElectricGuitar::changeVolume(float volume)
-{
-    std::cout << "Changed volume of " << name << " to " << volume << std::endl;
-}
-
-void ElectricGuitar::turnUpVolume()
-{
-    for (int i = 0; i <= 20; ++i )
-    {
-        changeVolume( i * 0.5f );
-    }
-}
-
-void ElectricGuitar::printThisPrice()
-{
-    std::cout << "This Price: " << this->price << std::endl;
-}
-
-void ElectricGuitar::printThisStringManufacturer()
-{
-    std::cout << "This String-Manufacturer: " << this->string1.manufacturer << std::endl;
-} 
-    
-void ElectricGuitar::GuitarString::breakString()
-{
-    std::cout << "String " << number << " just broke!! ";
-    if (isWound)
-    {
-        std::cout << "This is a wound string - how did that happen??" << std::endl;;
-    }
-    else  
-    {
-        std::cout << std::endl;
-    }
-}
-
-void ElectricGuitar::GuitarString::tuneString(float referencePitch)
-{
-    std::cout << "String " << number << " is tuned to " << referencePitch << " Hz" <<std::endl;
-}
-
-void ElectricGuitar::GuitarString::pluckString(int fret)
-{
-    std::cout << "Plucked String " << number << " / fret " << fret << std::endl;
-}
 
 // ============================================================
 /*
@@ -200,6 +83,7 @@ void ElectricGuitar::GuitarString::pluckString(int fret)
 
 #include <iostream>
 
+#include "ElectricGuitar.h"
 #include "Computer.h"
 #include "Bus.h"
 #include "MusicStore.h"

@@ -2,6 +2,7 @@
 
 #include "LeakedObjectDetector.h"
 
+#include "ElectricGuitar.h"
 #include "Computer.h"
 
 struct MusicStore
