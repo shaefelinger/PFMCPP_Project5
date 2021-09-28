@@ -1,11 +1,5 @@
 #pragma once
 
-#include "ElectricGuitar.h"
-#include "Computer.h"
-#include "Bus.h"
-#include "MusicStore.h"
-#include "RentalService.h"
-
 struct ElectricGuitar;
 struct Computer;
 struct Bus;
